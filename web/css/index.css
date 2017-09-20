@@ -1,0 +1,32 @@
+/*global css setting*/
+*{font-weight: 300;}
+html,body{height: 100%;width: 100%;margin: 0; padding: 0;font-size: 18px;}
+input{border:none;height:100%;width: 100%;outline: none;margin: 0;padding: 0;position: absolute;text-align: center;border-radius: .5em;}
+.body{height:100%;width: 100%;background: #f2f2f2;padding: .01em 0 0 0;}
+
+
+/*header located at the top of the web*/
+.header{line-height: 2.5em;height: 2.5em;width: 100%;background: white;font-size: 1.2em;position: fixed;text-align: center;box-shadow: 0 .1em .3em .1em  hsla(0,0%,90%,1)}
+
+/*The first panel for */
+.panel1{margin: 5em auto 0;padding: 1em 2em;background: white;width:100%;max-width:40em;box-shadow:.1em .1em .3em .1em hsla(0,0%,90%,1);border-radius: .2em;}
+
+/*the components of one line in panel*/
+.panel1-line{line-height: 1.5em;height: 1.5em;display: block;position: relative;margin: 1.5em 0;}
+.panel1-line-icon{height: 1.5em;line-height: 1.5em;width: 3em;background: url('../images/pole1.png') center center no-repeat;background-size: 1.8em .6em;display: inline-block;float: left;text-align: center;}
+.panel1-line-item{height: 1.5em;line-height: 1.5em;margin:0 1em 0 .5em;display: inline-block;vertical-align: middle;float: left;}
+.panel1-line-input-box{height: 1.5em;line-height: 1.5em;width: 4em;border: .01em solid rgba(201, 201, 201, 1);border-radius: .2em;display: inline-block;float: left;position: relative;cursor: pointer;}
+.panel1-line-ant-name{background: none;}
+.panel1-line-add{display:inline-block;float:right;height: 1.5em;line-height: 1.5em;width: 1.5em;background: url("../images/add_button.png") center center no-repeat;background-size: 90% 90%;cursor: pointer;}
+.panel1-line-close{display:inline-block;float:right;height: 1.5em;line-height: 1.5em;width: 1.5em;background: url("../images/close_button.png") center center no-repeat;background-size: 100% 100%;cursor: pointer;}
+.panel1-line-switch-box{height: 1.5em;line-height: 1.5em;width: 4em;border: .01em solid rgba(201, 201, 201, 1);border-radius: .2em;display: inline-block;float: left;position: relative;cursor: pointer}
+.panel1-line-switch-item{display: flex;height: 100%;width: 100%;position: relative;flex-direction: row}
+.panel1-line-switched{flex: 1;line-height: 1.875em;height: 1.875em;text-align: center;font-size: 80%;}
+.panel1-line-bottom-arrow{height: 1.5em;width: 1.5em;background: url("../images/bottom_arrow.png") center center no-repeat;background-size: 50% 50%;}
+.panel1-line-switch-items-hidden{display: none;position: absolute;width: 100%;height: 4.5em;line-height: 4.5em;border: .01em solid rgba(201, 201, 201, 1);border-radius: 0 0 .1em .1em / 0 0 .1em .1em;z-index: 100;background: white;text-align: center;padding: 0 .02em;left: -.05em;}
+.panel1-line-switch-item-hidden{line-height: 1.67em;height: 1.67em;font-size: 90%;}
+.panel1-line:nth-child(3){display: none;}
+
+/*the button to run this game*/
+.run-button{border: .01em solid #3DA8F5;color: #3DA8F5;line-height: 1.5em;height: 1.5em;display: inline-block;float: right;border-radius: .2em; cursor: pointer;width: 4em;text-align: center;font-size:90%;}
+.run-button:hover{background: #3DA8F5;color: white;cursor: pointer;}
