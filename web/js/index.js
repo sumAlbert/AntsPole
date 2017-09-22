@@ -1,13 +1,18 @@
 $(document).ready(function(){
+    /*global variables*/
+    var ant_postfix=0;//The postfix of ant
     var pole_len=10;//The length for the pole
     var ant_num=0;//The number of the ants
-    var ants={};
+    var ants={};//The detail info about ants
     var ant;//The global variables
+
     /*lock avoid repeat sth again*/
     var lock_add=false;
     var lock_hover=false;
+
     /*init web*/
     init();
+
     /*catch the length of pole*/
     $("#pole-len").blur(function(){
        pole_len=$(this).val();
@@ -16,8 +21,14 @@ $(document).ready(function(){
            console.log(pole_len);
        }
        else{
-            pole_len=parseInt(pole_len);
-           console.log(pole_len);
+           if (!isNaN(pole_len)){
+               pole_len=parseInt(pole_len);
+               console.log(pole_len);
+           }
+           else{
+               pole_len=10;
+               console.log(pole_len);
+           }
        }
     });
     /*add a ant*/
@@ -31,6 +42,24 @@ $(document).ready(function(){
             console.log(JSON.stringify(ants));
         }
     });
+    /*send the requests to the servlet*/
+    $(".run-button").click(function () {
+        var JSON_requests=JSON.stringify(ants);
+        $.ajax({
+            url:"AntsResult",
+            data:{
+                ants:JSON_requests,
+                pole:pole_len
+            },
+            success: function () {
+                console.log("success");
+            },
+            error:function () {
+                console.log("error");
+            }
+        });
+    });
+
     /*create a number between 0 and 1000000 as the id*/
     function createId(){
         return Math.round(Math.random()*1000000);
@@ -46,6 +75,7 @@ $(document).ready(function(){
     function addId(numId,flag){
         if(flag!=0){
             $(".panel1-line").eq(ant_num+2).attr("id","Ant-"+numId);
+            $(".panel1-line-ant-name").eq(ant_num+1).html("蚂蚁"+(ant_postfix+1));
             $(".panel1-line-close").eq(ant_num+1).attr("id","Close-"+numId);
             $(".panel1-line-switched").eq(ant_num+1).attr("id","Switched-"+numId);
             $(".switch-left").eq(ant_num+1).attr("id","Left-"+numId);
@@ -58,6 +88,7 @@ $(document).ready(function(){
             $(".panel1-line-switch-items-hidden").eq(ant_num+1).attr("id","Hidden-"+numId);
             setTimeout(function () {
                 ant_num=ant_num+1;
+                ant_postfix=ant_postfix+1;
             },100)
         }else{
             $(".panel1-line").eq(ant_num+1).attr("id","Ant-"+numId);
@@ -71,6 +102,7 @@ $(document).ready(function(){
             $(".panel1-line-switch-items-hidden").eq(ant_num).attr("id","Hidden-"+numId);
             setTimeout(function () {
                 ant_num=ant_num+1;
+                ant_postfix=ant_postfix+1;
             },100)
         }
     }
@@ -115,6 +147,44 @@ $(document).ready(function(){
             $("#Switched-"+numId).html("均可");
             ants[id].dirt=2;
         });
+        /*change the speed of the ant*/
+        $("#Speed-"+numId).blur(function(){
+            var id="id"+numId;
+            var speed=$(this).val();
+            if (speed==null || speed==""){
+                speed=1;
+                ants[id].speed=speed;
+            }
+            else{
+                if(!isNaN(speed)){
+                    speed=parseInt(speed);
+                    ants[id].speed=speed;
+                }
+                else{
+                    speed=1;
+                    ants[id].speed=speed;
+                }
+            }
+        });
+        /*change the dist of the ant*/
+        $("#Dist-"+numId).blur(function(){
+            var id="id"+numId;
+            var speed=$(this).val();
+            if (speed==null || speed==""){
+                speed=1;
+                ants[id].distX=speed;
+            }
+            else{
+                if(!isNaN(speed)){
+                    speed=parseInt(speed);
+                    ants[id].distX=speed;
+                }
+                else{
+                    speed=1;
+                    ants[id].distX=speed;
+                }
+            }
+        });
     }
     /*make up the JSON object to transform servlet*/
     function addAntInfo(numId,flag){
@@ -122,12 +192,12 @@ $(document).ready(function(){
             var antId="id"+numId;
             var panel1_line_add=$(".panel1-line").eq(2).clone();
             $(".panel1").append(panel1_line_add);
-            ant={id:antId,speed:1,dirt:0,distX:1};
+            ant={id:antId,speed:1,dirt:2,distX:1,pos:ant_postfix};
             ants[antId]=ant;
         }
         else{
             var antId="id"+numId;
-            ant={id:antId,speed:1,dirt:0,distX:1};
+            ant={id:antId,speed:1,dirt:2,distX:1,pos:0};
             ants[antId]=ant;
         }
     }
