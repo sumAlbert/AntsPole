@@ -11,6 +11,7 @@ input{border:none;height:100%;width: 100%;outline: none;margin: 0;padding: 0;pos
 .main-content{border-top:.01em solid white;}
 /*The first panel for */
 .panel1{margin: 5em auto 2em;padding: 1em 2em;background: white;width:100%;max-width:40em;box-shadow:.1em .1em .3em .1em hsla(0,0%,90%,1);border-radius: .2em;position: relative}
+.panel2{margin: 5em auto 2em;padding: 1em 2em;background: white;width:100%;max-width:40em;box-shadow:.1em .1em .3em .1em hsla(0,0%,90%,1);border-radius: .2em;position: relative}
 
 /*the components of one line in panel*/
 .ant-forward{vertical-align: bottom;font-size: 60%;color: #888;position: absolute;top: 2.5em;left: .5em;}
@@ -34,3 +35,16 @@ input{border:none;height:100%;width: 100%;outline: none;margin: 0;padding: 0;pos
 /*the button to run this game*/
 .run-button{border: .01em solid #3DA8F5;color: #3DA8F5;line-height: 1.5em;height: 1.5em;display: inline-block;float: right;border-radius: .2em; cursor: pointer;width: 4em;text-align: center;font-size:90%;}
 .run-button:hover{background: #3DA8F5;color: white;cursor: pointer;}
+
+/*the panel of result*/
+.result-part{width: 100%;display: block;}
+.result-part:nth-child(1){display: none;}
+.result-part-line{width: 100%;display: block;}
+.result-part-line-name{width: 100%;display: block;height: 2em;line-height: 2em;}
+.result-part-line-name-kind{width: 5em;display: inline-block;position: relative;float: left;line-height: 2em;}
+.result-part-line-name-extra{width: 5em;display: inline-block;position: relative;float: left;line-height: 2em;color: rgba(255, 102, 102, 0.537254901960784)}
+
+.result-part-line-items{display: flex;display: -webkit-flex;flex-direction: row;-webkit-flex-direction: row; flex-wrap: wrap;align-items: flex-start;}
+.result-part-line-item{display: flex;display: -webkit-flex;flex-direction: row;-webkit-flex-direction: row; line-height: 2em;height: 2em;width: 8em;}
+.result-part-line-item-name{flex:1;-webkit-flex: 1;}
+.result-part-line-item-content{flex:1;-webkit-flex: 1;}

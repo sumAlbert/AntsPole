@@ -54,6 +54,8 @@ $(document).ready(function(){
             success: function (data) {
                 var results=JSON.parse(data);
                 for(var index in results){
+                    var result_line=$("#example-result-line").clone();
+                    $(".result-part").append(result_line);
                     var kind=results[index];
                     var ants_arr=kind['ants'];
                     console.log(kind['time']);
