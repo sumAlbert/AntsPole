@@ -84,7 +84,9 @@
           <div class="panel1-line-close"></div>
         </div>
       </div>
-      <div class="panel"></div>
+      <div class="panel">
+
+      </div>
     </div>
     <div class="hidden-content"></div>
   </div>

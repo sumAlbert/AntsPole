@@ -52,11 +52,14 @@ $(document).ready(function(){
                 pole:pole_len
             },
             success: function (data) {
-                console.log(data);
                 var results=JSON.parse(data);
-                for(var result in results){
-                    for(var item in result){
-                        console.log(item);
+                for(var index in results){
+                    var kind=results[index];
+                    var ants_arr=kind['ants'];
+                    console.log(kind['time']);
+                    for (var ant_str in ants_arr){
+                        console.log(ants_arr[ant_str]['id']);
+                        console.log(ants_arr[ant_str]['dirt']);
                     }
                 }
             },
