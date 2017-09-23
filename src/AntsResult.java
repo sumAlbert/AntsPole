@@ -1,4 +1,5 @@
 import com.mysql.jdbc.BufferRow;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -9,10 +10,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import Object.*;
 
+import java.io.PrintWriter;
 import java.nio.Buffer;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class AntsResult extends HttpServlet{
@@ -27,6 +27,7 @@ public class AntsResult extends HttpServlet{
         List<Ant> fix_direction=new ArrayList<Ant>();
         List<Ant> change_direction=new ArrayList<Ant>();
         List<List<Ant>> kinds=new ArrayList<>();
+        List<AntResult> antResults=new ArrayList<>();
         pole=new Pole(Double.valueOf(pole_len));
         time=new Time();
         JSONObject jsonObject=JSONObject.fromObject(ants_str);
@@ -61,21 +62,44 @@ public class AntsResult extends HttpServlet{
                 int base_num=1<<(j-1);
                 int extra_num=i/base_num;
                 if(extra_num%2==0)
-                    new_ant.setDirt(false);
+                    new_ant.setInit_dirt(false);
                 else
-                    new_ant.setDirt(true);
+                    new_ant.setInit_dirt(true);
                 fix_copy.add(new_ant);
             }
             kinds.add(fix_copy);
         }
         logger.info("situation kind num : "+kinds.size());
-
+        int flag=0;
+        int kind_size=kinds.size();
+        int time_count=0;
+        while(flag!=kind_size){
+            time_count=time_count+1;
+            for(int i=0;i<kinds.size();i++){
+                List<Ant> ants_handing = kinds.get(i);
+                if (time.isFinished(ants_handing, pole)) {
+                    flag++;
+                    sortList(ants_handing);
+                    AntResult antResult=new AntResult(ants_handing,time_count);
+                    antResults.add(antResult);
+                    kinds.remove(i);
+                    i--;
+                }
+            }
+        }
+        JSONArray jsonArray=JSONArray.fromObject(antResults);
+        String json_str=jsonArray.toString();
+        logger.info(json_str);
+        PrintWriter printWriter=resp.getWriter();
+        printWriter.print(json_str);
+        printWriter.close();
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }
-    protected List<Ant> copyList(List<Ant> old_ants){
+    /*copy the old list existing ants*/
+    private List<Ant> copyList(List<Ant> old_ants){
         List<Ant> new_ants=new ArrayList<Ant>();
         for(int i=0;i<old_ants.size();i++){
             Ant old_ant=old_ants.get(i);
@@ -84,10 +108,12 @@ public class AntsResult extends HttpServlet{
         }
         return new_ants;
     }
-    protected void sortList(List<Ant> old_ants){
-        List<Ant> new_ants=new ArrayList<Ant>();
-        for(int i=0;i<old_ants.size();i++){
-
-        }
+    /*sort the list of ant*/
+    private void sortList(List<Ant> old_ants){
+        Collections.sort(old_ants,new Comparator<Ant>(){
+            public int compare(Ant o1, Ant o2){
+                return Integer.compare(o1.getPos(), o2.getPos());
+            }
+        });
     }
 }

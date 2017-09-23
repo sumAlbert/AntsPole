@@ -2,13 +2,15 @@ package Object;
 
 import java.util.Comparator;
 
-public class Ant implements Comparator{
+public class Ant{
     private double speed;//The speed of ant
     private double distX;//The distance between left point and ant
-    private boolean status;//The status of ant;false---- on the pole,true----under the pole
-    private boolean dirt;//The direction of ant
+    private boolean status;//The status of ant;true---- on the pole,false----under the pole
+    private boolean dirt;//The direction of ant,false---left,true---right
     private String id;
     private int pos;//The order of ants
+    private boolean init_dirt;
+
     /*construct function*/
     public Ant(String id,double speed,boolean dirt,double distX,int pos){
         super();
@@ -18,6 +20,7 @@ public class Ant implements Comparator{
         this.distX=distX;
         this.pos=pos;
         this.status=true;
+        this.init_dirt=dirt;
     }
     public Ant(String id,double speed,double distX,int pos){
         super();
@@ -35,8 +38,13 @@ public class Ant implements Comparator{
         this.id=ant.id;
         this.pos=ant.pos;
         this.status=ant.status;
+        this.init_dirt=ant.init_dirt;
     }
+
     /*The function to get private attrs*/
+    public boolean getInit_dirt(){
+        return this.init_dirt;
+    }
     public double getDistX() {
         return distX;
     }
@@ -57,6 +65,10 @@ public class Ant implements Comparator{
     }
 
     /*The function to set private attrs*/
+    public void setInit_dirt(boolean init_dirt) {
+        this.init_dirt = init_dirt;
+        this.dirt=init_dirt;
+    }
     public void setDirt(boolean dirt) {
         this.dirt = dirt;
     }
@@ -76,10 +88,19 @@ public class Ant implements Comparator{
         this.pos = pos;
     }
 
-    @Override
-    public int compare(Object o1, Object o2) {
-        Ant ant1=(Ant) o1;
-        Ant ant2=(Ant) o2;
-        return 0;
+    /*go for a time*/
+    public double run(Pole pole){
+        if (dirt){
+            distX+=speed;
+            if(distX<=0||distX>=pole.getLen())
+                status=false;
+            return distX;
+        }
+        else{
+            distX-=speed;
+            if(distX<=0||distX>=pole.getLen())
+                status=false;
+            return distX;
+        }
     }
 }

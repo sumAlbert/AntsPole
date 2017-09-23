@@ -51,8 +51,14 @@ $(document).ready(function(){
                 ants:JSON_requests,
                 pole:pole_len
             },
-            success: function () {
-                console.log("success");
+            success: function (data) {
+                console.log(data);
+                var results=JSON.parse(data);
+                for(var result in results){
+                    for(var item in result){
+                        console.log(item);
+                    }
+                }
             },
             error:function () {
                 console.log("error");
