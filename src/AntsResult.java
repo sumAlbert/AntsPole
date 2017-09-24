@@ -80,7 +80,7 @@ public class AntsResult extends HttpServlet{
                 if (time.isFinished(ants_handing, pole)) {
                     flag++;
                     sortList(ants_handing);
-                    AntResult antResult=new AntResult(ants_handing,time_count);
+                    AntResult antResult=new AntResult(ants_handing,time_count,pole.getLen());
                     antResults.add(antResult);
                     kinds.remove(i);
                     i--;

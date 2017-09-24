@@ -10,6 +10,7 @@ public class Ant{
     private String id;
     private int pos;//The order of ants
     private boolean init_dirt;
+    private double init_distX;
 
     /*construct function*/
     public Ant(String id,double speed,boolean dirt,double distX,int pos){
@@ -21,6 +22,7 @@ public class Ant{
         this.pos=pos;
         this.status=true;
         this.init_dirt=dirt;
+        this.init_distX=distX;
     }
     public Ant(String id,double speed,double distX,int pos){
         super();
@@ -29,6 +31,7 @@ public class Ant{
         this.distX=distX;
         this.pos=pos;
         this.status=true;
+        this.init_distX=distX;
     }
     public Ant(Ant ant){
         this.speed=ant.speed;
@@ -39,6 +42,7 @@ public class Ant{
         this.pos=ant.pos;
         this.status=ant.status;
         this.init_dirt=ant.init_dirt;
+        this.init_distX=ant.init_distX;
     }
 
     /*The function to get private attrs*/
@@ -63,6 +67,9 @@ public class Ant{
     public int getPos() {
         return pos;
     }
+    public double getInit_distX() {
+        return init_distX;
+    }
 
     /*The function to set private attrs*/
     public void setInit_dirt(boolean init_dirt) {
@@ -86,6 +93,9 @@ public class Ant{
     }
     public void setPos(int pos) {
         this.pos = pos;
+    }
+    public void setInit_distX(double init_distX) {
+        this.init_distX = init_distX;
     }
 
     /*go for a time*/

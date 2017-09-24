@@ -45,7 +45,7 @@
             <div class="panel1-line-switch-items-hidden">
               <div class="panel1-line-switch-item-hidden switch-left" >左</div>
               <div class="panel1-line-switch-item-hidden switch-right">右</div>
-              <div class="panel1-line-switch-item-hidden switch-both">随机</div>
+              <div class="panel1-line-switch-item-hidden switch-both">均可</div>
             </div>
           </div>
           <div class="panel1-line-item">&nbsp;&nbsp;</div>
@@ -86,15 +86,16 @@
       </div>
       <div class="panel2">
         <div class="result-part">
-          <div class="result-part-line" id="example-result-line">
+          <div class="result-part-line">
+            <div class="result-part-line-hidden-info"></div>
             <div class="result-part-line-name">
-              <div class="result-part-line-name-kind">情况1：9s</div>
-              <div class="result-part-line-name-extra">最短时间</div>
+              <div class="result-part-line-name-kind"></div>
+              <div class="result-part-line-name-extra"></div>
             </div>
             <div class="result-part-line-items">
               <div class="result-part-line-item">
-                <div class="result-part-line-item-name">蚂蚁1:</div>
-                <div class="result-part-line-item-content">左</div>
+                <div class="result-part-line-item-name"></div>
+                <div class="result-part-line-item-content"></div>
               </div>
             </div>
           </div>

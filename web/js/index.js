@@ -5,7 +5,9 @@ $(document).ready(function(){
     var ant_num=0;//The number of the ants
     var ants={};//The detail info about ants
     var ant;//The global variables
-
+    var save_dom=$(".panel2").html();
+    var kinds_ants=[];
+    var result_len=10;
     /*lock avoid repeat sth again*/
     var lock_add=false;
     var lock_hover=false;
@@ -52,18 +54,9 @@ $(document).ready(function(){
                 pole:pole_len
             },
             success: function (data) {
-                var results=JSON.parse(data);
-                for(var index in results){
-                    var result_line=$("#example-result-line").clone();
-                    $(".result-part").append(result_line);
-                    var kind=results[index];
-                    var ants_arr=kind['ants'];
-                    console.log(kind['time']);
-                    for (var ant_str in ants_arr){
-                        console.log(ants_arr[ant_str]['id']);
-                        console.log(ants_arr[ant_str]['dirt']);
-                    }
-                }
+                $(".panel2").empty();
+                $(".panel2").html(save_dom);
+                addBackDOM(data);
             },
             error:function () {
                 console.log("error");
@@ -211,5 +204,85 @@ $(document).ready(function(){
             ant={id:antId,speed:1,dirt:2,distX:1,pos:0};
             ants[antId]=ant;
         }
+    }
+    /*build new DOM from servlet*/
+    function addBackDOM(data){
+        var results=JSON.parse(data);
+        var flag=0;
+        var last=results.length;
+        for(var i=0;i<last;i++){
+            var result_line=$(".result-part-line").eq(0).clone();
+            $(".result-part").append(result_line);
+        }
+        setTimeout(addKindBackInfo,0,flag,last,results);
+    }
+    /*add the Info about DOM*/
+    function addKindBackInfo(flag,last,results){
+        console.log("init"+flag);
+        var kind=results[flag];
+        result_len=kind['pole'];
+        kinds_ants[flag]=[];
+        $(".result-part-line").eq(flag+1).attr("id","result-part-line"+(flag+1));
+        $(".result-part-line-name-kind").eq(flag+1).html("情况"+(flag+1)+":&nbsp;&nbsp;"+kind['time']+"s");
+        $(".result-part-line-hidden-info").eq(flag+1).html(flag);
+        $(".result-part-line-items").eq(flag+1).attr("id","result-part-line-items"+(flag+1));
+        $(".result-part-line-item").eq(flag+1).attr("id","result-part-line-item"+(flag+1));
+        $("#result-part-line"+(flag+1)).click(display);
+        setTimeout(addAntBackInfo,0,flag,last,results,0);
+        if(flag==0) $(".result-part-line-name-extra").eq(flag+1).html("最短时间");
+        if(flag==last-1) $(".result-part-line-name-extra").eq(flag+1).html("最长时间");
+        setTimeout(function () {
+            console.log(kinds_ants);
+            console.log(result_len);
+        },1000)
+    }
+    function addAntBackInfo(flag,last,results,ant_flag){
+        var kind=results[flag];
+        var ant_arr=kind["ants"];
+        if(ant_flag!=0){
+            var ant_item=$(".result-part-line-item").eq(0).clone();
+            $("#result-part-line-items"+(flag+1)).append(ant_item);
+            $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-name").eq(ant_flag).html("蚂蚁"+(ant_flag+1)+":&nbsp;");
+            var dirt=ant_arr[ant_flag]["init_dirt"];
+            if(dirt){
+                $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-content").eq(ant_flag).html("右");
+                var ant={dist:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
+                kinds_ants[flag][ant_flag]=ant;
+            }
+            else{
+                $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-content").eq(ant_flag).html("左");
+                var ant={dist:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
+                kinds_ants[flag][ant_flag]=ant;
+            }
+            if(ant_flag!=ant_arr.length-1){
+                setTimeout(addAntBackInfo,0,flag,last,results,ant_flag+1);
+            }else{
+                if(flag!=last-1) setTimeout(addKindBackInfo,0,flag+1,last,results);
+            }
+        }
+        else{
+            $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-name").eq(ant_flag).html("蚂蚁"+(ant_flag+1)+":&nbsp;");
+            var dirt=ant_arr[ant_flag]["init_dirt"];
+            if(dirt){
+                $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-content").eq(ant_flag).html("右");
+                var ant={dist:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
+                kinds_ants[flag][ant_flag]=ant;
+            }
+            else{
+                $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-content").eq(ant_flag).html("左");
+                var ant={dist:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
+                kinds_ants[flag][ant_flag]=ant;
+            }
+            if(ant_flag!=ant_arr.length-1){
+                setTimeout(addAntBackInfo,0,flag,last,results,ant_flag+1);
+            }else{
+                if(flag!=last-1) setTimeout(addKindBackInfo,0,flag+1,last,results);
+            }
+        }
+    }
+
+    function display(){
+        var flag=$(this).find(".result-part-line-hidden-info").html();
+        console.log(kinds_ants[flag]);
     }
 });
