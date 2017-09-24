@@ -7,11 +7,13 @@ $(document).ready(function(){
     var ant;//The global variables
     var save_dom=$(".panel2").html();
     var kinds_ants=[];
+    var handing_ants=[];
     var result_len=10;
+    var pole_display_len=720;
+    var interval=10;
     /*lock avoid repeat sth again*/
     var lock_add=false;
     var lock_hover=false;
-
     /*init web*/
     init();
 
@@ -231,10 +233,6 @@ $(document).ready(function(){
         setTimeout(addAntBackInfo,0,flag,last,results,0);
         if(flag==0) $(".result-part-line-name-extra").eq(flag+1).html("最短时间");
         if(flag==last-1) $(".result-part-line-name-extra").eq(flag+1).html("最长时间");
-        setTimeout(function () {
-            console.log(kinds_ants);
-            console.log(result_len);
-        },1000)
     }
     function addAntBackInfo(flag,last,results,ant_flag){
         var kind=results[flag];
@@ -246,12 +244,12 @@ $(document).ready(function(){
             var dirt=ant_arr[ant_flag]["init_dirt"];
             if(dirt){
                 $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-content").eq(ant_flag).html("右");
-                var ant={dist:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
+                var ant={dirt:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
                 kinds_ants[flag][ant_flag]=ant;
             }
             else{
                 $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-content").eq(ant_flag).html("左");
-                var ant={dist:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
+                var ant={dirt:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
                 kinds_ants[flag][ant_flag]=ant;
             }
             if(ant_flag!=ant_arr.length-1){
@@ -265,12 +263,12 @@ $(document).ready(function(){
             var dirt=ant_arr[ant_flag]["init_dirt"];
             if(dirt){
                 $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-content").eq(ant_flag).html("右");
-                var ant={dist:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
+                var ant={dirt:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
                 kinds_ants[flag][ant_flag]=ant;
             }
             else{
                 $("#result-part-line-items"+(flag+1)).find(".result-part-line-item-content").eq(ant_flag).html("左");
-                var ant={dist:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
+                var ant={dirt:dirt,speed:ant_arr[ant_flag]["speed"],distX:ant_arr[ant_flag]["init_distX"]};
                 kinds_ants[flag][ant_flag]=ant;
             }
             if(ant_flag!=ant_arr.length-1){
@@ -280,9 +278,75 @@ $(document).ready(function(){
             }
         }
     }
-
+    /*when you choose one kind of results.Change the ant on the pole*/
     function display(){
+        handing_ants=[];
         var flag=$(this).find(".result-part-line-hidden-info").html();
-        console.log(kinds_ants[flag]);
+        var kind_ants=kinds_ants[flag];
+        pole_display_len=$(".display-ant-line").width();
+        $(".display-ant-line").empty();
+        for(var ant in kind_ants){
+            $(".display-ant-line").append("<div class=\"display-ant\"></div>");
+            $(".display-ant").eq(ant).attr("id","ant"+ant);
+            if(kind_ants[ant].dirt){
+                var distX=getDisplayDistX(kind_ants[ant].distX);
+                $("#ant"+ant).addClass("display-ant-right");
+                $("#ant"+ant).css("left",distX+"px");
+                var handing_ant={dirt:kind_ants[ant].dirt,distX:kind_ants[ant].distX,state:true,speed:kind_ants[ant].speed};
+                handing_ants[ant]=handing_ant;
+            }
+            else{
+                var distX=getDisplayDistX(kind_ants[ant].distX);
+                $("#ant"+ant).addClass("display-ant-left");
+                $("#ant"+ant).css("left",distX+"px");
+                var handing_ant={dirt:kind_ants[ant].dirt,distX:kind_ants[ant].distX,state:true,speed:kind_ants[ant].speed};
+                handing_ants[ant]=handing_ant;
+            }
+        }
+        setTimeout(startDisplay,100);
+    }
+    function startDisplay(){
+        moveAnts(0);
+    }
+    function moveAnts(flag){
+        if(flag<handing_ants.length-1){
+            setTimeout(moveAnts,0,flag+1);
+        }
+        var handing_ant=handing_ants[flag];
+        if(handing_ant.state){
+            if(handing_ant.dirt){
+                handing_ant.distX=handing_ant.distX+handing_ant.speed;
+                var distX=getDisplayDistX(handing_ant.distX+handing_ant.speed);
+                $("#ant"+flag).animate({"left":distX},1000);
+                if(flag>=handing_ants.length){
+                    var isGoingOn=0;
+                    setTimeout(function () {
+                       if(isGoingOn=handing_ants.length)
+                           moveAnts(0);
+                    },5);
+                    for(var i in handing_ants){
+                        console.log(i);
+                        console.log(handing_ants[i].state);
+                        if(!handing_ants[i].state)
+                            isGoingOn=isGoingOn+1;
+                    }
+                }
+            }else{
+                handing_ant.distX=handing_ant.distX-handing_ant.speed;
+                var distX=getDisplayDistX(handing_ant.distX-handing_ant.speed);
+                $("#ant"+flag).animate({"left":distX},1000);
+                if(flag>=handing_ants.length){
+                    var isGoingOn=0;
+                    moveAnts(0);
+                }
+            }
+        }
+    }
+    /*switch the real pole len to the len shown on the screen*/
+    function getDisplayDistX(distX){
+        var result=(distX/pole_len)*pole_display_len;
+        result=result-10;
+        result=parseInt(result);
+        return result;
     }
 });

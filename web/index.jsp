@@ -85,6 +85,16 @@
         </div>
       </div>
       <div class="panel2">
+        <div class="display-time-line">
+          <div class="display-time-line-item">0s</div>
+          <div class="display-time-buttons"></div>
+        </div>
+        <div class="display-ant-line">
+          <div class="display-ant display-ant-left"></div>
+          <div class="display-ant display-ant-right"></div>
+        </div>
+        <div class="display-pole-line-upper"></div>
+        <div class="display-pole-line-bottom"></div>
         <div class="result-part">
           <div class="result-part-line">
             <div class="result-part-line-hidden-info"></div>
