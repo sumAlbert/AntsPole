@@ -316,28 +316,35 @@ $(document).ready(function(){
         if(handing_ant.state){
             if(handing_ant.dirt){
                 handing_ant.distX=handing_ant.distX+handing_ant.speed;
-                var distX=getDisplayDistX(handing_ant.distX+handing_ant.speed);
-                $("#ant"+flag).animate({"left":distX},1000);
-                if(flag>=handing_ants.length){
+                var distX=getDisplayDistX(handing_ant.distX);
+                $("#ant"+flag).animate({"left":distX},1000,"linear");
+                if(flag>=handing_ants.length-1){
                     var isGoingOn=0;
                     setTimeout(function () {
-                       if(isGoingOn=handing_ants.length)
-                           moveAnts(0);
+                       if(isGoingOn=handing_ants.length);
+                           setTimeout(moveAnts,1000,0);
                     },5);
                     for(var i in handing_ants){
-                        console.log(i);
-                        console.log(handing_ants[i].state);
+                        console.log("isGoingOn:"+handing_ants[i].state);
                         if(!handing_ants[i].state)
                             isGoingOn=isGoingOn+1;
                     }
                 }
             }else{
                 handing_ant.distX=handing_ant.distX-handing_ant.speed;
-                var distX=getDisplayDistX(handing_ant.distX-handing_ant.speed);
-                $("#ant"+flag).animate({"left":distX},1000);
-                if(flag>=handing_ants.length){
+                var distX=getDisplayDistX(handing_ant.distX);
+                $("#ant"+flag).animate({"left":distX},1000,"linear");
+                if(flag>=handing_ants.length-1){
                     var isGoingOn=0;
-                    moveAnts(0);
+                    setTimeout(function () {
+                        if(isGoingOn=handing_ants.length);
+                            setTimeout(moveAnts,1000,0);
+                    },5);
+                    for(var i in handing_ants){
+                        console.log("isGoingOn:"+handing_ants[i].state);
+                        if(!handing_ants[i].state)
+                            isGoingOn=isGoingOn+1;
+                    }
                 }
             }
         }
