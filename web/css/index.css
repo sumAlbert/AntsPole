@@ -11,7 +11,7 @@ input{border:none;height:100%;width: 100%;outline: none;margin: 0;padding: 0;pos
 .main-content{border-top:.01em solid white;}
 /*The first panel for */
 .panel1{margin: 5em auto 2em;padding: 1em 2em;background: white;width:100%;max-width:40em;box-shadow:.1em .1em .3em .1em hsla(0,0%,90%,1);border-radius: .2em;position: relative}
-.panel2{margin: 5em auto 2em;padding: 1em 2em;background: white;width:100%;max-width:40em;box-shadow:.1em .1em .3em .1em hsla(0,0%,90%,1);border-radius: .2em;position: relative}
+.panel2{margin: 3em auto 2em;padding: 1em 2em;background: white;width:100%;max-width:40em;box-shadow:.1em .1em .3em .1em hsla(0,0%,90%,1);border-radius: .2em;position: relative}
 .panel3{display: none;}
 /*the components of one line in panel*/
 .ant-forward{vertical-align: bottom;font-size: 60%;color: #888;position: absolute;top: 2.5em;left: .5em;}

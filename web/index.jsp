@@ -86,7 +86,7 @@
       </div>
       <div class="panel2">
         <div class="display-time-line">
-          <div class="display-time-line-item">0s</div>
+          <div class="display-time-line-item">1</div>
           <div class="display-time-buttons"></div>
         </div>
         <div class="display-ant-line">

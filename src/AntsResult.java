@@ -6,12 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import Object.*;
 
 import java.io.PrintWriter;
-import java.nio.Buffer;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -98,6 +96,7 @@ public class AntsResult extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }
+
     /*copy the old list existing ants*/
     private List<Ant> copyList(List<Ant> old_ants){
         List<Ant> new_ants=new ArrayList<Ant>();

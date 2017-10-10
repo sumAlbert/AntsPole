@@ -306,6 +306,7 @@ $(document).ready(function(){
         setTimeout(startDisplay,100);
     }
     function startDisplay(){
+        $(".display-time-line-item").html(1);
         moveAnts(0);
     }
     function moveAnts(flag){
@@ -313,38 +314,58 @@ $(document).ready(function(){
             setTimeout(moveAnts,0,flag+1);
         }
         var handing_ant=handing_ants[flag];
-        if(handing_ant.state){
-            if(handing_ant.dirt){
+        console.log(handing_ant.state);
+        console.log(handing_ant.dirt);
+        if(handing_ant.dirt){
+            if(handing_ant.state!=false)
                 handing_ant.distX=handing_ant.distX+handing_ant.speed;
-                var distX=getDisplayDistX(handing_ant.distX);
-                $("#ant"+flag).animate({"left":distX},1000,"linear");
-                if(flag>=handing_ants.length-1){
-                    var isGoingOn=0;
-                    setTimeout(function () {
-                       if(isGoingOn=handing_ants.length);
-                           setTimeout(moveAnts,1000,0);
-                    },5);
-                    for(var i in handing_ants){
-                        console.log("isGoingOn:"+handing_ants[i].state);
-                        if(!handing_ants[i].state)
-                            isGoingOn=isGoingOn+1;
+            if (handing_ant.distX>=pole_len||handing_ant.distX<=0){
+                handing_ant.state=false;
+            }
+            var distX=getDisplayDistX(handing_ant.distX);
+            $("#ant"+flag).animate({"left":distX},1000,"linear");
+            if(flag>=handing_ants.length-1){
+                var isGoingOn=0;
+                setTimeout(function () {
+                    if(isGoingOn!=handing_ants.length){
+                        var time_now=$(".display-time-line-item").html();
+                        time_now=parseInt(time_now);
+                        time_now=time_now+1;
+                        $(".display-time-line-item").html(time_now);
+                        setTimeout(function () {
+                            moveAnts(0);
+                        },1000);
                     }
+                },5);
+                for(var i in handing_ants){
+                    if(!handing_ants[i].state)
+                        isGoingOn=isGoingOn+1;
                 }
-            }else{
+            }
+        }else{
+            if(handing_ant.state!=false)
                 handing_ant.distX=handing_ant.distX-handing_ant.speed;
-                var distX=getDisplayDistX(handing_ant.distX);
-                $("#ant"+flag).animate({"left":distX},1000,"linear");
-                if(flag>=handing_ants.length-1){
-                    var isGoingOn=0;
-                    setTimeout(function () {
-                        if(isGoingOn=handing_ants.length);
-                            setTimeout(moveAnts,1000,0);
-                    },5);
-                    for(var i in handing_ants){
-                        console.log("isGoingOn:"+handing_ants[i].state);
-                        if(!handing_ants[i].state)
-                            isGoingOn=isGoingOn+1;
+            if (handing_ant.distX>=pole_len||handing_ant.distX<=0){
+                handing_ant.state=false;
+            }
+            var distX=getDisplayDistX(handing_ant.distX);
+            $("#ant"+flag).animate({"left":distX},1000,"linear");
+            if(flag>=handing_ants.length-1){
+                var isGoingOn=0;
+                setTimeout(function () {
+                    if(isGoingOn!=handing_ants.length){
+                        var time_now=$(".display-time-line-item").html();
+                        time_now=parseInt(time_now);
+                        time_now=time_now+1;
+                        $(".display-time-line-item").html(time_now);
+                        setTimeout(function () {
+                            moveAnts(0);
+                        },1000);
                     }
+                },5);
+                for(var i in handing_ants){
+                    if(!handing_ants[i].state)
+                        isGoingOn=isGoingOn+1;
                 }
             }
         }
